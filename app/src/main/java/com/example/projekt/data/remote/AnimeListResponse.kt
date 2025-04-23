@@ -1,5 +1,5 @@
 package com.example.projekt.data.remote
 
-data class TopAnimeResponse(
+data class AnimeListResponse(
     val data: List<AnimeDto>
 )

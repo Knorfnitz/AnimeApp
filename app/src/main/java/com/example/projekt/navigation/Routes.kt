@@ -7,3 +7,9 @@ object AnimeListScreenRoute
 
 @Serializable
 object FavoritesScreenRoute
+
+@Serializable
+object SearchScreenRoute
+
+@Serializable
+data class AnimeDetailScreenRoute(val id: Int)

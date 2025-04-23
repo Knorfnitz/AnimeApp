@@ -27,17 +27,25 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun AnimeListScreen(
-    viewModel: AnimeListViewModel = koinViewModel()
+    viewModel: AnimeListViewModel = koinViewModel(),
+    onNavigateToDetail: (Anime) -> Unit,
+   // onBack: () -> Unit,
+
 ) {
     val animeList = viewModel.animeList.collectAsState()
     val isLoading = viewModel.isLoading.collectAsState()
     val error = viewModel.error.collectAsState()
+    val favorites = viewModel.favoriteIds.collectAsState()
 
     AnimeListContent(
         animeList = animeList.value,
         isLoading = isLoading.value,
         error = error.value,
-        onRetry = { viewModel.fetchTopAnimeList() }
+        onRetry = { viewModel.fetchTopAnimeList() },
+        favoriteIds = favorites.value,
+        onFavoriteClick = { viewModel.toggleFavorite(it) },
+        onNavigateToDetail = onNavigateToDetail,
+       // onBack = onBack,
     )
 }
 
@@ -46,8 +54,14 @@ fun AnimeListContent(
     animeList: List<Anime>,
     isLoading: Boolean,
     error: String?,
-    onRetry: () -> Unit
+    onRetry: () -> Unit,
+    favoriteIds: Set<Int>,
+    onFavoriteClick: (Anime) -> Unit,
+    onNavigateToDetail: (Anime) -> Unit,
+   // onBack: () -> Unit
 ) {
+
+
     Box(modifier = Modifier.fillMaxSize()) {
         when {
             isLoading -> {
@@ -77,7 +91,15 @@ fun AnimeListContent(
                         .padding(8.dp)
                 ) {
                     items(animeList) { anime ->
-                        AnimeCard(anime = anime)
+                        AnimeCard(
+                            anime = anime,
+                            isFavorite = favoriteIds.contains(anime.id),
+                            onFavoriteClick = onFavoriteClick,
+                            onClick = {
+                                onNavigateToDetail(anime)
+                            },
+                          //  onBack = onBack
+                        )
                     }
                 }
             }
@@ -97,7 +119,10 @@ fun AnimeListScreenPreview() {
             animeList = mockList,
             isLoading = false,
             error = null,
-            onRetry = {}
+            onRetry = {},
+            favoriteIds = emptySet(),
+            onFavoriteClick = {},
+            onNavigateToDetail = { }
         )
     }
 }
