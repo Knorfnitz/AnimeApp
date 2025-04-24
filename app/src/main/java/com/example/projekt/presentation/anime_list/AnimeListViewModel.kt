@@ -29,6 +29,9 @@ class AnimeListViewModel(
     private val _error = MutableStateFlow<String?>(null)
     val error = _error.asStateFlow()
 
+    /**
+     * StateFlow mit den IDs der favorisierten Animes.
+     */
     val favoriteIds: StateFlow<Set<Int>> = favoritesController.favoriteIds
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptySet())
 
@@ -36,6 +39,12 @@ class AnimeListViewModel(
         fetchTopAnimeList()
     }
 
+    /**
+     * Lädt die Liste der Top Anime von der API.
+     *
+     * Setzt während des Ladevorgangs den Ladezustand und behandelt mögliche Fehlerquellen wie
+     * Netzwerkprobleme oder Serverfehler.
+     */
     fun fetchTopAnimeList() {
         viewModelScope.launch {
             _isLoading.value = true
@@ -58,6 +67,13 @@ class AnimeListViewModel(
         }
     }
 
+    /**
+     * Fügt einen Anime zu den Favoriten hinzu oder entfernt ihn, falls er bereits favorisiert wurde.
+     *
+     * Die Änderung wird im FavoritesController gespeichert.
+     *
+     * @param anime Der Anime, dessen Favoritenstatus geändert werden soll.
+     */
     fun toggleFavorite(anime: Anime) {
         viewModelScope.launch {
             favoritesController.toggle(anime)

@@ -2,6 +2,7 @@ package com.example.projekt.data.remote
 
 import com.example.projekt.data.local.FavoriteAnimeEntity
 import com.example.projekt.domain.model.Anime
+import com.example.projekt.domain.model.AnimeDetail
 
 fun AnimeDto.toDomain(): Anime {
     return Anime(
@@ -28,15 +29,21 @@ fun FavoriteAnimeEntity.toDomain() = Anime(
 )
 
 
-fun AnimeDetailDto.toDomain(): Anime {
-    return Anime(
-        id = malId,
+fun AnimeDetailDto.toDomain(): AnimeDetail {
+    return AnimeDetail(
+        id = id,
         title = title,
+        titleEnglish = titleEnglish,
+        titleJapanese = titleJapanese,
         imageUrl = images.jpg.imageUrl,
         score = score,
         rank = rank,
         episodes = episodes,
+        status = status,
         type = type,
-        year = year
+        year = year,
+        rating = rating,
+        trailerUrl = trailer?.embedUrl,
+        trailerThumbnail = trailer?.images?.maxRes
     )
 }

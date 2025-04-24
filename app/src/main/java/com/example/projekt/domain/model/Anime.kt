@@ -13,6 +13,7 @@ data class Anime(
     val year: Int?
 )
 
+
 fun Anime.toEntity() = FavoriteAnimeEntity(
     id = id,
     title = title,

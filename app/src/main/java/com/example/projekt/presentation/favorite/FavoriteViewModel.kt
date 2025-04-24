@@ -22,6 +22,14 @@ class FavoritesViewModel(
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
+    /**
+     * Entfernt den angegebenen Anime aus der Favoritenliste.
+     *
+     * Diese Funktion wird im Hintergrund über eine Coroutine ausgeführt und
+     * delegiert den Löschvorgang an den [FavoritesController].
+     *
+     * @param anime Der Anime, der aus den Favoriten entfernt werden soll.
+     */
     fun removeFavorite(anime: Anime) {
         viewModelScope.launch {
             favoritesController.remove(anime)

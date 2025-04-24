@@ -25,9 +25,6 @@ class SearchViewModel(
 ) : ViewModel() {
 
     private val _query = MutableStateFlow("")
-    fun updateQuery(input: String) {
-        _query.value = input
-    }
 
     private val _results = MutableStateFlow<List<Anime>>(emptyList())
     val results = _results.asStateFlow()
@@ -53,6 +50,27 @@ class SearchViewModel(
         }
     }
 
+    /**
+     * Aktualisiert die aktuelle Suchanfrage.
+     *
+     * Diese Funktion wird verwendet, um die Benutzereingabe in das Suchfeld zu speichern.
+     * Die eigentliche Suche wird durch ein debounce-gesteuertes Flow verarbeitet.
+     *
+     * @param input Der neue Suchbegriff.
+     */
+    fun updateQuery(input: String) {
+        _query.value = input
+    }
+
+    /**
+     * Führt eine Anime-Suche mit dem angegebenen Suchbegriff durch.
+     *
+     * Diese Funktion wird intern von einem debouncten Flow aufgerufen,
+     * sobald sich die Suchanfrage ändert. Die Ergebnisse werden aus der API geladen,
+     * in die Domain-Modelle konvertiert und gespeichert.
+     *
+     * @param query Der Suchbegriff, nach dem in der Jikan-API gesucht wird.
+     */
     private suspend fun search(query: String) {
         _isLoading.value = true
         _error.value = null
@@ -65,6 +83,14 @@ class SearchViewModel(
         _isLoading.value = false
     }
 
+    /**
+     * Fügt den angegebenen Anime den Favoriten hinzu oder entfernt ihn,
+     * je nachdem, ob er bereits enthalten ist.
+     *
+     * Die Umschaltung erfolgt über den [FavoritesController].
+     *
+     * @param anime Der Anime, dessen Favoritenstatus geändert werden soll.
+     */
     fun toggleFavorite(anime: Anime) {
         viewModelScope.launch {
             favoritesController.toggle(anime)

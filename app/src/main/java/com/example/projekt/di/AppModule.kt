@@ -57,6 +57,7 @@ val appModule = module {
 
     single { FavoritesController(get()) }
 
+
     viewModel {
         AnimeListViewModel(
             animeRepo = get(),
@@ -77,6 +78,9 @@ val appModule = module {
     }
 
     viewModel { (handle: SavedStateHandle) ->
-        AnimeDetailViewModel(get(), handle)
+        AnimeDetailViewModel(
+            get(),
+            handle
+        )
     }
 }

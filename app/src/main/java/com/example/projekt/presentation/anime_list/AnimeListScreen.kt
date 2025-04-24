@@ -21,7 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.projekt.data.repository.MockRepository
 import com.example.projekt.domain.model.Anime
-import com.example.projekt.presentation.anime_list.component.AnimeCard
+import com.example.projekt.presentation.component.AnimeCard
 import kotlinx.coroutines.runBlocking
 import org.koin.androidx.compose.koinViewModel
 
