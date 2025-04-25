@@ -16,6 +16,7 @@ kotlinSerialization = "1.6.3"
 # api
 moshiVersion = "1.15.0"
 retrofitVersion = "2.11.0"
+loggingInterceptor = "4.9.3"
 # async image
 coilCompose = "3.0.0-rc02"
 # data store
@@ -52,6 +53,7 @@ kotlinx-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-seria
 moshi = { group = "com.squareup.moshi", name = "moshi-kotlin", version.ref = "moshiVersion" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofitVersion" }
 converterMoshi = { group = "com.squareup.retrofit2", name = "converter-moshi", version.ref = "retrofitVersion" }
+logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "loggingInterceptor" }
 # async image
 coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coilCompose" }
 coil-network-okhttp = { group = "io.coil-kt.coil3", name = "coil-network-okhttp", version.ref = "coilCompose" }

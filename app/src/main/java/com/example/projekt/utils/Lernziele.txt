@@ -1,0 +1,33 @@
+# Lernziele
+
+## Trennung in Domain und Data:
+- Domain -> Logik ohne Implementierungen (Modelle, Interfaces, Controller o.ä.)
+- Data -> Zugriffe auf Datenquellen (Datenbanken, APIs, Dateien inkl. DTOs und Mapper)
+
+## DTO:
+- Data Transfer Object
+- Trennung zwischen App-Modell und API-Modell
+- Flexibler bei der Datenmodellierung und nicht an Verschachtelungen gebunden
+- Das DTO wird dann mit einer Erweiterungsfunktion in das App-Modell umgewandelt (.toDomain())
+
+## Presentation-Struktur
+- UI in Features/Bereiche/Seiten teilen, damit es bei großen Projekten übersichtlich bleibt
+- Allgemeiner `components`-Ordner für wiederverwendbare components, und in jedem Feature die spezifischen inkl. ViewModel und Screens
+- Verhindert Überladen von Dateien und macht den Code übersichtlicher
+
+## Controller
+- Für wiederverwendbare Logik
+- Per DI in mehreren ViewModels nutzbar
+
+## DI
+- Man kann viel mehr im App-Modul auslagern als gedacht
+- Koin ist ein starkes Framework
+
+## runCatching
+- Alternative zu try-catch
+- `.onSuccess` und `.onFailure` Methoden für erfolgreiche und fehlgeschlagene Operationen
+
+## SavedStateHandle
+- Dient dazu, Argumente bei der Navigation sicher an Prozesse zu übergeben
+- Bei mir das Beispiel mit der `id` von Anime, mit der ich in der Detailansicht neu fetchen muss
+- Die Argumente im `@Serializable`-Object werden automatisch in das `SavedStateHandle` überführt

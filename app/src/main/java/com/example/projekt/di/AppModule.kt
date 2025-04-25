@@ -1,5 +1,4 @@
 package com.example.projekt.di
-
 import androidx.lifecycle.SavedStateHandle
 import com.example.projekt.data.local.FavoritesDatabase
 import com.example.projekt.data.local.FavoritesRepository
@@ -14,15 +13,30 @@ import com.example.projekt.presentation.favorite.FavoritesViewModel
 import com.example.projekt.presentation.search.SearchViewModel
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
+
 val appModule = module {
 
     val jikanBaseUrl = "https://api.jikan.moe/v4/"
+
+    single{
+        HttpLoggingInterceptor().apply{
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+    }
+
+    single{
+        OkHttpClient.Builder()
+            .addInterceptor(get<HttpLoggingInterceptor>())
+            .build()
+    }
 
     single<AnimeRepositoryInterface> {
         AnimeRepository(
@@ -39,6 +53,7 @@ val appModule = module {
     single {
         Retrofit.Builder()
             .baseUrl(jikanBaseUrl)
+            .client(get())
             .addConverterFactory(MoshiConverterFactory.create(get()))
             .build()
     }
@@ -56,6 +71,9 @@ val appModule = module {
     }
 
     single { FavoritesController(get()) }
+
+
+
 
 
     viewModel {

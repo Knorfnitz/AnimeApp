@@ -35,7 +35,6 @@ fun StarRating(score: Double, modifier: Modifier = Modifier) {
                 Icon(
                     imageVector = Icons.Filled.StarBorder,
                     contentDescription = null,
-                   // tint = Color(0xFFFFD700),
                     tint = Color.Gray,
                     modifier = Modifier.matchParentSize()
                 )
